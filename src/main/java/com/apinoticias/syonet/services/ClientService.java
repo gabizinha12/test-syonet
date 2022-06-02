@@ -1,6 +1,5 @@
 package com.apinoticias.syonet.services;
 
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,39 +18,37 @@ public class ClientService {
 	public ClientService(ClientRepository clientRepository) {
 		this.clientRepository = clientRepository;
 	}
-	
+    
 	@Transactional
 	public ClientDTO register(ClientDTO dto) {
-		Client object = new Client();
-		copyDTOToEntity(dto, object);
-		object = clientRepository.save(object);
-		return new ClientDTO(object);
+    Client object = new Client();
+    copyDtoToEntity(dto, object);
+    return new ClientDTO(object);
+	}
+	
+	@Transactional(readOnly=true)
+	public ClientDTO findById(Long id) {
+		Client client = clientRepository.findById(id).get();
+		return new ClientDTO(client);
 	}
 	
 	@Transactional
 	public ClientDTO update(Long id, ClientDTO dto) {
-		Optional<Client> existingId = clientRepository.findById(id);
-	    Client entity =   existingId.get();
-	    copyDTOToEntity(dto, entity);
-	    entity = clientRepository.save(entity);
-	    return new ClientDTO(entity);
+		Client client = clientRepository.findById(id).get();
+		copyDtoToEntity(dto, client);
+		client = clientRepository.save(client);
+		return new ClientDTO(client);
 	}
-	
-	@Transactional(readOnly = true)
-    public ClientDTO findById(Long id) {
-	  Optional<Client> object = clientRepository.findById(id);
-	  Client entity = object.get();
-	  return new ClientDTO(entity);
-  }
 	
 	public void delete(Long id) {
 		clientRepository.deleteById(id);
 	}
+
 	
-	public void copyDTOToEntity(ClientDTO dto, Client entity) {
+	
+	public void copyDtoToEntity(ClientDTO dto, Client entity) {
 		entity.setBirthDate(dto.getBirthDate());
 		entity.setEmail(dto.getEmail());
 		entity.setName(dto.getName());
 	}
-	
 }

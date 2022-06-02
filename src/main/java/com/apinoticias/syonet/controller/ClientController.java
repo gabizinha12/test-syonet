@@ -21,36 +21,32 @@ import com.apinoticias.syonet.services.ClientService;
 @RequestMapping("/clients")
 public class ClientController {
 
-	
-
 	@Autowired
 	private ClientService service;
-	
-	
-	
-	@PostMapping("/register")
-	public ResponseEntity<ClientDTO> insert(@RequestBody ClientDTO dto) {
+
+	@PostMapping("/create")
+	public ResponseEntity<ClientDTO> createClient(@RequestBody ClientDTO dto) {
 		dto = service.register(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
-	
-	@GetMapping("/fetchClient/{id}")
-	public ResponseEntity<ClientDTO> findClient(@PathVariable Long id) {
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<ClientDTO> updateClient(@PathVariable Long id, @RequestBody ClientDTO dto) {
+		dto = service.update(id, dto);
+		return ResponseEntity.ok().body(dto);
+	}
+
+	@GetMapping("/findById/{id}")
+	public ResponseEntity<ClientDTO> searchClient(@PathVariable Long id) {
 		ClientDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);
 	}
-	
-	@PutMapping("/updateClient/{id}")
-    public ResponseEntity<ClientDTO> update(@PathVariable Long id, @RequestBody ClientDTO dto) {
-		dto = service.update(id, dto);
-		return ResponseEntity.ok().body(dto);
-	}	
-	
-	@DeleteMapping("/deleteClient/{id}")
-	public ResponseEntity<ClientDTO> delete(@PathVariable Long id) {
+
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<ClientDTO> deleteClient(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 }
