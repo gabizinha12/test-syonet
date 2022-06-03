@@ -4,3 +4,4 @@
 - Instale o MySQL Workbench, configure o mysql server pra rodar como serviço na porta 3306.
 - Crie a tabela syonet no MySQL
 - Rode a coleção no postman.
+- Altere a senha no properties para o seu usuário root.
