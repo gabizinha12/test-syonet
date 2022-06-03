@@ -23,6 +23,7 @@ public class ClientService {
 	public ClientDTO register(ClientDTO dto) {
     Client object = new Client();
     copyDtoToEntity(dto, object);
+    object = clientRepository.save(object);
     return new ClientDTO(object);
 	}
 	

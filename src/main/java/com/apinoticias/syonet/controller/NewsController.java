@@ -24,7 +24,7 @@ public class NewsController {
 	@Autowired
 	private NewsService service;
 
-	@PostMapping("/register")
+	@PostMapping("/create")
 	public ResponseEntity<NewsDTO> createNews(@RequestBody NewsDTO dto) {
 		dto = service.register(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
@@ -43,7 +43,7 @@ public class NewsController {
 		return ResponseEntity.noContent().build();
 
 	}
-	@GetMapping("/fetchNews/{id}")
+	@GetMapping("/findById/{id}")
 	public ResponseEntity<NewsDTO> fetchNews(@PathVariable Long id) {
 		NewsDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);

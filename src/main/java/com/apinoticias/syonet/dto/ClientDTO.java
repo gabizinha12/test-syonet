@@ -2,6 +2,9 @@ package com.apinoticias.syonet.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import javax.persistence.Column;
+
 import com.apinoticias.syonet.entities.Client;
 
 public class ClientDTO implements Serializable{
@@ -12,6 +15,7 @@ public class ClientDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	@Column(unique = true)
 	private String email;
 	private String name;
 	private LocalDate birthDate;
